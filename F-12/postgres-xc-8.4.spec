@@ -384,7 +384,7 @@ esac
 
 install -d %{buildroot}/etc/rc.d/init.d
 sed 's/^PGVERSION=.*$/PGVERSION=%{version}/' <%{SOURCE3} > pgxc.init
-install -m 755 postgresql.init %{buildroot}/etc/rc.d/init.d/pgxc-%{majorversion}
+install -m 755 pgxc.init %{buildroot}/etc/rc.d/init.d/pgxc-%{majorversion}
 
 %if %pam
 install -d %{buildroot}/etc/pam.d
