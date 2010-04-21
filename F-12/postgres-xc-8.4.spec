@@ -25,21 +25,21 @@
 %{!?plpython:%define plpython 1}
 %{!?pltcl:%define pltcl 1}
 %{!?plperl:%define plperl 1}
-%{!?ssl:%define ssl 0}
+%{!?ssl:%define ssl 1}
 %{!?intdatetimes:%define intdatetimes 1}
 %{!?kerberos:%define kerberos 1}
 %{!?nls:%define nls 1}
 %{!?xml:%define xml 1}
 %{!?pam:%define pam 1}
 %{!?disablepgfts:%define disablepgfts 0}
-%{!?runselftest:%define runselftest 1}
+%{!?runselftest:%define runselftest 0}
 %{!?uuid:%define uuid 1}
 %{!?ldap:%define ldap 1}
 
 Summary:	Postgres-XC client programs and libraries
 Name:		pgxc_v0.9
 Version:	8.4
-Release:	1PGDG%{?dist}
+Release:	2PGDG%{?dist}
 License:	BSD
 Group:		Applications/Databases
 Url:		http://www.postgres-xc.org/ 
@@ -59,6 +59,7 @@ Source16:	filter-requires-perl-Pg.sh
 Patch1:		rpm-pgsql.patch
 Patch3:		pgxc-logging.patch
 Patch6:		pgxc-perl-rpath.patch
+Patch8:		postgres-xc-09-build.patch
 
 Buildrequires:	perl glibc-devel bison flex >= 2.5.31
 Requires:	/sbin/ldconfig initscripts
@@ -254,6 +255,7 @@ system, including regression tests and benchmarks.
 %patch3 -p1
 # patch5 is applied later
 %patch6 -p1
+%patch8 -p0
 
 cp -p %{SOURCE12} .
 
@@ -715,5 +717,10 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Wed Mar 31 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9-2PGDG
+- Add a new patch for a clean build
+- Disable regression tests for now.
+
 * Wed Mar 31 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9-1PGDG
 - Initial cut v0.9
+
