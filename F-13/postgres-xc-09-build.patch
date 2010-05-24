@@ -1,0 +1,60 @@
+--- src/gtm/client/fe-misc.c.old	2010-04-20 15:46:06.592461872 +0300
++++ src/gtm/client/fe-misc.c	2010-04-20 15:46:34.582336100 +0300
+@@ -47,7 +47,6 @@
+ #include "gtm/libpq-fe.h"
+ #include "gtm/libpq-int.h"
+ 
+-
+ static int	gtmpqPutMsgBytes(const void *buf, size_t len, GTM_Conn *conn);
+ static int	gtmpqSendSome(GTM_Conn *conn, int len);
+ static int gtmpqSocketCheck(GTM_Conn *conn, int forRead, int forWrite,
+@@ -648,11 +647,6 @@
+ 	 * detect true EOF.
+ 	 */
+ 
+-#ifdef USE_SSL
+-	if (conn->ssl)
+-		return 0;
+-#endif
+-
+ 	switch (gtmpqReadReady(conn))
+ 	{
+ 		case 0:
+@@ -929,15 +923,6 @@
+ 		return -1;
+ 	}
+ 
+-#ifdef USE_SSL
+-	/* Check for SSL library buffering read bytes */
+-	if (forRead && conn->ssl && SSL_pending(conn->ssl) > 0)
+-	{
+-		/* short-circuit the select */
+-		return 1;
+-	}
+-#endif
+-
+ 	/* We will retry as long as we get EINTR */
+ 	do
+ 		result = gtmpqSocketPoll(conn->sock, forRead, forWrite, end_time);
+--- src/interfaces/libpq/fe-connect.c.old	2010-04-20 16:12:32.398337391 +0300
++++ src/interfaces/libpq/fe-connect.c	2010-04-20 16:13:28.956348563 +0300
+@@ -25,7 +25,7 @@
+ #include "libpq-fe.h"
+ #include "libpq-int.h"
+ #include "fe-auth.h"
+-#include "pg_config_paths.h"
++#include "../../port/pg_config_paths.h"
+ 
+ #ifdef WIN32
+ #include "win32.h"
+--- src/interfaces/libpq/fe-misc.c.old	2010-04-20 16:12:36.522337315 +0300
++++ src/interfaces/libpq/fe-misc.c	2010-04-20 16:13:35.266336011 +0300
+@@ -57,7 +57,7 @@
+ #include "libpq-int.h"
+ #include "pqsignal.h"
+ #include "mb/pg_wchar.h"
+-#include "pg_config_paths.h"
++#include "../../port/pg_config_paths.h"
+ 
+ 
+ static int	pqPutMsgBytes(const void *buf, size_t len, PGconn *conn);
