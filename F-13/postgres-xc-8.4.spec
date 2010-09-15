@@ -37,9 +37,9 @@
 %define majorversion 8.4
 
 Summary:	Postgres-XC client programs and libraries
-Name:		pgxc_v0.9
-Version:	8.4.3
-Release:	2PGDG%{?dist}
+Name:		pgxc_v0_9_2
+Version:	8.4.4
+Release:	1PGDG%{?dist}
 License:	BSD
 Group:		Applications/Databases
 Url:		http://www.postgres-xc.org/
@@ -60,7 +60,7 @@ Source24:	man.tar.gz
 Patch1:		rpm-pgsql.patch
 Patch3:		pgxc-logging.patch
 Patch6:		pgxc-perl-rpath.patch
-Patch8:		postgres-xc-09-build.patch
+#Patch8:		postgres-xc-09-build.patch
 
 Buildrequires:	perl glibc-devel bison flex 
 Requires:	/sbin/ldconfig initscripts
@@ -253,7 +253,7 @@ system, including regression tests and benchmarks.
 %define __perl_requires %{SOURCE16}
 
 %prep
-%setup -q -n %{name}
+%setup -q -n pgxc
 cp %{SOURCE22} doc
 cp %{SOURCE24} doc
 pushd doc
@@ -263,7 +263,7 @@ popd
 %patch3 -p1
 # patch5 is applied later
 %patch6 -p1
-%patch8 -p0
+#%patch8 -p0
 
 pushd doc
 tar -zcf postgres.tar.gz *.html stylesheet.css
@@ -699,6 +699,10 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Sep 14 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9.2-1PGDG
+- Update to 8.4.4 and 0.9.2
+- Remove patch8 -- it is now in upstream.
+
 * Wed Mar 31 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9-2PGDG
 - Add a new patch for a clean build
 - Disable regression tests for now.
