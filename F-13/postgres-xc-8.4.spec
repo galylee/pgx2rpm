@@ -50,7 +50,7 @@ Source4:	Makefile.regress
 Source5:	pg_config.h
 Source6:	README.rpm-dist
 Source7:	ecpg_config.h
-Source12:	http://www.postgresql.org/files/documentation/pdf/8.4/postgresql-%{version}-A4.pdf
+#Source12:	http://www.postgresql.org/files/documentation/pdf/8.4/postgresql-%{version}-A4.pdf
 Source14:	pgxc.pam
 Source15:	pgxc-bashprofile
 Source16:	filter-requires-perl-Pg.sh
@@ -60,7 +60,7 @@ Source24:	man.tar.gz
 Patch1:		rpm-pgsql.patch
 Patch3:		pgxc-logging.patch
 Patch6:		pgxc-perl-rpath.patch
-#Patch8:		postgres-xc-09-build.patch
+Patch8:		postgres-xc-09-build.patch
 
 Buildrequires:	perl glibc-devel bison flex 
 Requires:	/sbin/ldconfig initscripts
@@ -263,14 +263,14 @@ popd
 %patch3 -p1
 # patch5 is applied later
 %patch6 -p1
-#%patch8 -p0
+%patch8 -p0
 
 pushd doc
 tar -zcf postgres.tar.gz *.html stylesheet.css
 rm -f *.html stylesheet.css
 popd
 
-cp -p %{SOURCE12} .
+#cp -p %{SOURCE12} .
 
 %build
 
@@ -541,7 +541,7 @@ rm -rf %{buildroot}
 %files docs
 %defattr(-,root,root)
 %doc doc/src/*
-%doc *-A4.pdf
+#%doc *-A4.pdf
 %doc src/tutorial
 %doc doc/html
 
@@ -701,7 +701,7 @@ rm -rf %{buildroot}
 %changelog
 * Tue Sep 14 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9.2-1PGDG
 - Update to 8.4.4 and 0.9.2
-- Remove patch8 -- it is now in upstream.
+- Remove part of patch8 -- it is now in upstream.
 
 * Wed Mar 31 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9-2PGDG
 - Add a new patch for a clean build
