@@ -28,7 +28,6 @@
 %{!?xml:%define xml 1}
 %{!?pam:%define pam 1}
 %{!?pgfts:%define pgfts 1}
-%{!?sdt:%define sdt 1}
 %{!?runselftest:%define runselftest 0}
 %{!?uuid:%define uuid 1}
 %{!?ldap:%define ldap 1}
@@ -65,10 +64,6 @@ Patch8:		postgres-xc-09-build.patch
 Buildrequires:	perl glibc-devel bison flex 
 Requires:	/sbin/ldconfig initscripts
 
-%if %plperl
-BuildRequires:	perl-ExtUtils-Embed
-%endif
-
 %if %plpython
 BuildRequires:	python-devel
 %endif
@@ -99,10 +94,6 @@ BuildRequires:	libxml2-devel libxslt-devel
 
 %if %pam
 BuildRequires:	pam-devel
-%endif
-
-%if %sdt
-BuildRequires: systemtap-sdt-devel
 %endif
 
 %if %uuid
@@ -316,9 +307,6 @@ CFLAGS=`echo $CFLAGS|xargs -n 1|grep -v ffast-math|xargs -n 100`
 %endif
 %if %nls
 	--enable-nls \
-%endif
-%if %sdt
-        --enable-dtrace \
 %endif
 %if !%intdatetimes
 	--disable-integer-datetimes \
