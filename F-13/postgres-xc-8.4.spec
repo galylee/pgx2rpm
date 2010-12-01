@@ -37,8 +37,8 @@
 %define majorversion 8.4
 
 Summary:	Postgres-XC client programs and libraries
-Name:		pgxc_v0_9_2
-Version:	8.4.4
+Name:		pgxc_v0_9_3
+Version:	8.4.5
 Release:	1PGDG%{?dist}
 License:	BSD
 Group:		Applications/Databases
@@ -150,11 +150,10 @@ Summary:	The programs needed to create and run a pgxc server
 Group:		Applications/Databases
 Requires:	/usr/sbin/useradd /sbin/chkconfig 
 Requires:	pgxc = %{version}-%{release}
-Conflicts:	pgxc < 7.4
 
 %description server
-The postgresql-server package includes the programs needed to create
-and run a PostgreSQL server, which will in turn allow you to create
+The pgxc-server package includes the programs needed to create
+and run a Postgres-XC server, which will in turn allow you to create
 and maintain PostgreSQL databases.  PostgreSQL is an advanced
 Object-Relational database management system (DBMS) that supports
 almost all SQL constructs (including transactions, subselects and
@@ -162,6 +161,14 @@ user-defined types and functions). You should install
 postgresql-server if you want to create and maintain your own
 PostgreSQL databases and/or your own PostgreSQL server. You also need
 to install the postgresql package.
+
+%package gtm
+Summary:	Global Transaction Manager for Postgres-XC
+Group:		Applications/Databases
+Requires:	pgxc = %{version}-%{release}
+
+%description gtm
+Global Transaction Manager for Postgres-XC
 
 %package docs
 Summary:	Extra documentation for PostgreSQL
@@ -606,9 +613,6 @@ rm -rf %{buildroot}
 %endif
 %attr (755,root,root) %dir /etc/sysconfig/pgsql
 %{_bindir}/initdb
-%{_bindir}/gtm
-%{_bindir}/gtm_ctl
-%{_bindir}/gtm_proxy
 %{_bindir}/pg_controldata
 %{_bindir}/pg_ctl
 %{_bindir}/pg_resetxlog
@@ -650,6 +654,12 @@ rm -rf %{buildroot}
 %{_datadir}/pgsql/information_schema.sql
 %{_datadir}/pgsql/snowball_create.sql
 %{_datadir}/pgsql/sql_features.txt
+
+%files gtm
+%defattr(-,root,root)
+%{_bindir}/gtm
+%{_bindir}/gtm_ctl
+%{_bindir}/gtm_proxy
 
 %files devel -f pg_devel.lst
 %defattr(-,root,root)
@@ -699,6 +709,10 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Wed Dec 1 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9.3-1PGDG
+- Update 0.9.3
+- Push GTM into a separate package.
+
 * Tue Sep 14 2010 Devrim GUNDUZ <devrim@gunduz.org> v0.9.2-1PGDG
 - Update to 8.4.4 and 0.9.2
 - Remove part of patch8 -- it is now in upstream.
