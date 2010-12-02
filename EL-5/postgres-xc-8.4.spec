@@ -43,7 +43,7 @@ License:	BSD
 Group:		Applications/Databases
 Url:		http://www.postgres-xc.org/
 
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}.tar.gz
+Source0:	http://sourceforge.net/projects/postgres-xc/files/Version_0.9.3/%{name}.tar.gz/download
 Source3:	pgxc.init
 Source4:	Makefile.regress
 Source5:	pg_config.h
