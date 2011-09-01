@@ -1,0 +1,39 @@
+Building RPMs for Postgres-XC 0.9.5
+
+Distribution case:
+In the case of CentOS5.6, library uuid-devel is not included by default.
+This has to be installed with:
+   yum install uuid-devel
+
+General fabrication:
+1. Build a local repository for RPM building
+   cp -r /usr/src/redhat/* $RPMREPO
+
+2. Refer to the RPM root repository
+   echo "%_topdir $RPMREPO" > $HOME/.rpmmacros
+
+3. Add the following files to $RPMREPO/SOURCES
+   - postgres-xc.pam
+   - pgxc-0.9.5.tar.gz downloadable from Source Forge
+     http://sourceforge.net/projects/postgres-xc/files/Version_0.9.5/pgxc-0.9.5.tar.gz
+   cp postgres-xc.pam pgxc-0.9.5.tar.gz $RPMREPO/SOURCES
+
+ 4) Distribute spec file postgres-xc.spec
+   cp postgres-xc.spec $RPMREPO/SPECS
+
+ 5) RPM creation
+   cd $RPMREPO/SPECS
+   rpmbuild -ba postgres-xc.spec
+
+ 6) RPM location
+   $RPMREPO/SRPMS : SRPM location
+   $RPMREPO/RPMS/x86_64 : RPM package location
+
+
+Building from a SRPM file
+   rpmbuild --rebuild $SRPM_FILE
+
+Verify content of an RPM file
+   rpm -qpl $RPM_FILE
+Export files of an RPM package
+   rpm2cpio $RPM_FILE | cpio -idv
