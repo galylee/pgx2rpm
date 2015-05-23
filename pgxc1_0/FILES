@@ -1,0 +1,15 @@
+Release 1.0.3 of Postgres-XC contains the following files
+
+FILES	
+	This file. List of files release with Postgres-XC 1.0.3
+
+COPYING
+	Copyright Notice
+
+README
+	Release Note
+
+Complete source code for build
+	Ready-to-install build of Postgres-XC 1.0.3.
+	man documentation is included in doc-xc/src/sgml/man*/.
+	HTML documentation is included in doc-xc/src/sgml/html/.
